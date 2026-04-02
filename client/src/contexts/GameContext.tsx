@@ -16,6 +16,7 @@ export interface GameState {
   selectedFootballer: Footballer | null;
   footballers: Footballer[];
   gameResult: 'impostor-caught' | 'impostor-won' | null;
+  selectedCategory: string | null;
 }
 
 interface GameContextType {
@@ -26,6 +27,7 @@ interface GameContextType {
   resetGame: () => void;
   setFootballers: (footballers: Footballer[]) => void;
   nextPlayer: () => void;
+  setSelectedCategory: (categoryId: string) => void;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -54,6 +56,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     selectedFootballer: null,
     footballers: defaultFootballers,
     gameResult: null,
+    selectedCategory: null,
   });
 
   const startGame = useCallback((playerCount: number) => {
@@ -108,6 +111,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       impostorIndex: -1,
       selectedFootballer: null,
       gameResult: null,
+      selectedCategory: null,
     }));
   }, []);
 
@@ -125,6 +129,13 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }));
   }, []);
 
+  const setSelectedCategory = useCallback((categoryId: string) => {
+    setGameState((prev) => ({
+      ...prev,
+      selectedCategory: categoryId,
+    }));
+  }, []);
+
   const value: GameContextType = {
     gameState,
     startGame,
@@ -133,6 +144,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     resetGame,
     setFootballers,
     nextPlayer,
+    setSelectedCategory,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
