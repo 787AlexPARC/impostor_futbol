@@ -8,7 +8,7 @@ import { ChevronRight } from 'lucide-react';
  * - Selector de categorías con tarjetas interactivas
  * - Animaciones de entrada y transiciones fluidas
  * - Colores vibrantes y efectos de hover dinámicos
- * - Efectos visuales que reflejan la energía del fútbol
+ * - Completamente responsivo para móviles
  */
 interface CategorySelectorProps {
   onCategorySelected: (categoryId: string) => void;
@@ -23,22 +23,22 @@ export default function CategorySelector({ onCategorySelected }: CategorySelecto
   };
 
   return (
-    <div className="max-w-5xl mx-auto">
-      <div className="mb-12 text-center animate-in fade-in slide-in-from-top-4 duration-700">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent">
+    <div className="w-full">
+      <div className="mb-6 md:mb-12 text-center animate-in fade-in slide-in-from-top-4 duration-700">
+        <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4 bg-gradient-to-r from-blue-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent">
           Elige tu Categoría
         </h2>
-        <p className="text-lg text-gray-300">
+        <p className="text-base md:text-lg text-gray-300 px-4">
           Selecciona los futbolistas con los que quieres jugar
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
         {footballerCategories.map((category, idx) => (
           <button
             key={category.id}
             onClick={() => handleSelectCategory(category.id)}
-            className={`group relative overflow-hidden rounded-xl transition-all duration-300 transform hover:scale-105 animate-in fade-in ${
+            className={`group relative overflow-hidden rounded-lg md:rounded-xl transition-all duration-300 transform hover:scale-105 animate-in fade-in ${
               gameState.selectedCategory === category.id
                 ? 'bg-gradient-to-br from-blue-600 to-orange-600 border-2 border-yellow-400 shadow-2xl shadow-orange-500/50'
                 : 'bg-gradient-to-br from-slate-800/50 to-slate-900/50 border-2 border-blue-500/30 hover:border-orange-500/50 hover:shadow-2xl hover:shadow-orange-500/30'
@@ -57,54 +57,54 @@ export default function CategorySelector({ onCategorySelected }: CategorySelecto
             </div>
 
             {/* Contenido */}
-            <div className="relative z-10 p-6">
-              <div className="text-6xl mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300 inline-block">
+            <div className="relative z-10 p-4 md:p-6">
+              <div className="text-4xl md:text-6xl mb-2 md:mb-4 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300 inline-block">
                 {category.icon}
               </div>
 
-              <h3 className="text-xl font-bold text-white mb-2 group-hover:text-yellow-300 transition-colors duration-300">
+              <h3 className="text-base md:text-xl font-bold text-white mb-1 md:mb-2 group-hover:text-yellow-300 transition-colors duration-300 text-left">
                 {category.name}
               </h3>
 
-              <p className="text-sm text-gray-300 mb-4 group-hover:text-gray-100 transition-colors duration-300 text-left">
+              <p className="text-xs md:text-sm text-gray-300 mb-3 md:mb-4 group-hover:text-gray-100 transition-colors duration-300 text-left line-clamp-2">
                 {category.description}
               </p>
 
-              <div className="flex items-center justify-between pt-4 border-t border-slate-700/50 group-hover:border-yellow-400/30 transition-colors duration-300">
-                <span className="text-xs font-semibold text-orange-400 group-hover:text-yellow-400 transition-colors duration-300">
+              <div className="flex items-center justify-between pt-2 md:pt-4 border-t border-slate-700/50 group-hover:border-yellow-400/30 transition-colors duration-300">
+                <span className="text-xs md:text-sm font-semibold text-orange-400 group-hover:text-yellow-400 transition-colors duration-300">
                   {category.footballers.length} jugadores
                 </span>
 
                 {gameState.selectedCategory === category.id ? (
-                  <span className="text-sm font-bold text-yellow-300 flex items-center gap-1 animate-pulse">
-                    ✓ Seleccionado
+                  <span className="text-xs md:text-sm font-bold text-yellow-300 flex items-center gap-1 animate-pulse">
+                    ✓
                   </span>
                 ) : (
                   <ChevronRight
-                    size={18}
-                    className="text-orange-400 group-hover:text-yellow-400 group-hover:translate-x-1 transition-all duration-300"
+                    size={16}
+                    className="text-orange-400 group-hover:text-yellow-400 group-hover:translate-x-1 transition-all duration-300 md:size-18"
                   />
                 )}
               </div>
             </div>
 
             {/* Borde brillante en hover */}
-            <div className="absolute inset-0 border-2 border-transparent group-hover:border-yellow-400/50 rounded-xl transition-all duration-300 pointer-events-none"></div>
+            <div className="absolute inset-0 border-2 border-transparent group-hover:border-yellow-400/50 rounded-lg md:rounded-xl transition-all duration-300 pointer-events-none"></div>
           </button>
         ))}
       </div>
 
       {/* Botón para continuar */}
       {gameState.selectedCategory && (
-        <div className="mt-12 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="mt-8 md:mt-12 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
           <div className="inline-block">
             <Button
               onClick={() => {
                 /* El componente padre manejará esto */
               }}
-              className="py-6 px-8 text-lg font-bold bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-orange-500/50 hover:scale-105 flex items-center gap-2"
+              className="py-4 md:py-6 px-6 md:px-8 text-base md:text-lg font-bold bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-orange-500/50 hover:scale-105 flex items-center gap-2"
             >
-              Continuar con {footballerCategories.find((c) => c.id === gameState.selectedCategory)?.name}
+              Continuar
               <ChevronRight size={20} />
             </Button>
           </div>
@@ -112,7 +112,7 @@ export default function CategorySelector({ onCategorySelected }: CategorySelecto
       )}
 
       {/* Información adicional */}
-      <div className="mt-12 text-center text-sm text-gray-400 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
+      <div className="mt-8 md:mt-12 text-center text-xs md:text-sm text-gray-400 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 px-4">
         <p>💡 Cada categoría tiene diferentes futbolistas. ¡Prueba todas!</p>
       </div>
     </div>

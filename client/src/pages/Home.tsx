@@ -11,6 +11,7 @@ import GameFinish from '@/components/GameFinish';
  * - Animaciones fluidas y transiciones dinámicas
  * - Tipografía audaz (Bebas Neue) para títulos
  * - Elementos asimétricos que crean tensión visual
+ * - Completamente responsivo para móviles, tablets y escritorio
  */
 export default function Home() {
   const { gameState, resetGame } = useGame();
@@ -26,13 +27,13 @@ export default function Home() {
       {/* Contenido principal */}
       <div className="relative z-10">
         {/* Header */}
-        <header className="border-b border-blue-500/20 bg-black/30 backdrop-blur-sm">
-          <div className="container flex items-center justify-between py-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-orange-500 rounded-lg flex items-center justify-center">
+        <header className="border-b border-blue-500/20 bg-black/30 backdrop-blur-sm sticky top-0 z-50">
+          <div className="container flex items-center justify-between py-3 md:py-4 px-3 md:px-0">
+            <div className="flex items-center gap-2 md:gap-3 min-w-0">
+              <div className="w-8 md:w-10 h-8 md:h-10 bg-gradient-to-br from-blue-500 to-orange-500 rounded-lg flex items-center justify-center flex-shrink-0">
                 <span className="text-white font-bold text-lg">⚽</span>
               </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent">
+              <h1 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-blue-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent truncate">
                 IMPOSTOR FUTBOL
               </h1>
             </div>
@@ -40,7 +41,7 @@ export default function Home() {
               variant="outline"
               size="sm"
               onClick={() => setShowAdmin(!showAdmin)}
-              className="border-blue-500/50 text-blue-400 hover:bg-blue-500/10"
+              className="border-blue-500/50 text-blue-400 hover:bg-blue-500/10 text-xs md:text-sm flex-shrink-0"
             >
               {showAdmin ? 'Cerrar' : 'Admin'}
             </Button>
@@ -48,7 +49,7 @@ export default function Home() {
         </header>
 
         {/* Contenido principal */}
-        <main className="container py-8">
+        <main className="container py-6 md:py-8 px-3 md:px-0">
           {!gameState.gameStarted ? (
             <GameSetup showAdmin={showAdmin} />
           ) : gameState.gamePhase === 'playing' ? (
