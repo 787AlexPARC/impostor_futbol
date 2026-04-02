@@ -9,6 +9,7 @@ import PlayerCard from './PlayerCard';
  * - Animaciones de revelación con efecto 3D
  * - Indicador de jugador actual con efecto de spotlight
  * - Botón Finalizar Juego para control manual
+ * - El impostor ve "IMPOSTOR" en su carta
  */
 export default function GameBoard() {
   const { gameState, revealCard, finishGame, nextPlayer } = useGame();
@@ -35,6 +36,9 @@ export default function GameBoard() {
   const handleFinishGame = () => {
     finishGame();
   };
+
+  const currentRevealedCard = revealedCard !== null ? revealCard(revealedCard) : null;
+  const isImpostorRevealed = revealedCard === gameState.impostorIndex;
 
   return (
     <div className="max-w-4xl mx-auto animate-in fade-in duration-500">
@@ -83,15 +87,27 @@ export default function GameBoard() {
       {revealedCard !== null && (
         <div className="mb-8 text-center animate-in fade-in zoom-in duration-500">
           <div className="inline-block">
-            <div className="bg-gradient-to-br from-blue-500/30 to-orange-500/30 border-2 border-yellow-400 rounded-xl p-8 backdrop-blur-sm shadow-2xl shadow-yellow-400/30">
-              <p className="text-gray-300 text-sm mb-2 uppercase tracking-widest">Futbolista revelado:</p>
-              <p className="text-4xl font-bold text-yellow-400 mb-2">
-                {gameState.selectedFootballer?.name}
-              </p>
-              <p className="text-gray-400 text-sm">
-                {gameState.selectedFootballer?.position}
-              </p>
-            </div>
+            {isImpostorRevealed ? (
+              // Mostrar IMPOSTOR con efecto especial
+              <div className="bg-gradient-to-br from-red-600/50 to-orange-600/50 border-4 border-red-500 rounded-xl p-12 backdrop-blur-sm shadow-2xl shadow-red-500/50 animate-pulse">
+                <p className="text-gray-300 text-sm mb-4 uppercase tracking-widest">¡CUIDADO!</p>
+                <p className="text-6xl md:text-7xl font-bold text-red-400 mb-4 animate-bounce">
+                  IMPOSTOR
+                </p>
+                <p className="text-2xl text-red-300">🎭</p>
+              </div>
+            ) : (
+              // Mostrar futbolista normal
+              <div className="bg-gradient-to-br from-blue-500/30 to-orange-500/30 border-2 border-yellow-400 rounded-xl p-8 backdrop-blur-sm shadow-2xl shadow-yellow-400/30">
+                <p className="text-gray-300 text-sm mb-2 uppercase tracking-widest">Futbolista revelado:</p>
+                <p className="text-4xl font-bold text-yellow-400 mb-2">
+                  {gameState.selectedFootballer?.name}
+                </p>
+                <p className="text-gray-400 text-sm">
+                  {gameState.selectedFootballer?.position}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       )}

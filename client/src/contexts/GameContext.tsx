@@ -23,7 +23,7 @@ export interface GameState {
 interface GameContextType {
   gameState: GameState;
   startGame: (playerCount: number) => void;
-  revealCard: (playerIndex: number) => Footballer;
+  revealCard: (playerIndex: number) => Footballer | { id: string; name: string; position: string };
   finishGame: () => void;
   resetGame: () => void;
   setFootballers: (footballers: Footballer[]) => void;
@@ -81,10 +81,10 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }));
   }, [gameState.footballers]);
 
-  const revealCard = useCallback((playerIndex: number): Footballer => {
+  const revealCard = useCallback((playerIndex: number): Footballer | { id: string; name: string; position: string } => {
     const isImpostor = playerIndex === gameState.impostorIndex;
     const footballer = isImpostor
-      ? gameState.footballers[Math.floor(Math.random() * gameState.footballers.length)]
+      ? { id: 'impostor', name: 'IMPOSTOR', position: '🎭' }
       : gameState.selectedFootballer!;
 
     setGameState((prev) => ({
@@ -93,7 +93,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }));
 
     return footballer;
-  }, [gameState.impostorIndex, gameState.selectedFootballer, gameState.footballers]);
+  }, [gameState.impostorIndex, gameState.selectedFootballer]);
 
   const finishGame = useCallback(() => {
     setGameState((prev) => ({
