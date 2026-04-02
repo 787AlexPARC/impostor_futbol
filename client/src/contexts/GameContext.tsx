@@ -17,13 +17,14 @@ export interface GameState {
   footballers: Footballer[];
   gameResult: 'impostor-caught' | 'impostor-won' | null;
   selectedCategory: string | null;
+  gamePhase: 'playing' | 'finished';
 }
 
 interface GameContextType {
   gameState: GameState;
   startGame: (playerCount: number) => void;
   revealCard: (playerIndex: number) => Footballer;
-  endGame: (result: 'impostor-caught' | 'impostor-won') => void;
+  finishGame: () => void;
   resetGame: () => void;
   setFootballers: (footballers: Footballer[]) => void;
   nextPlayer: () => void;
@@ -57,6 +58,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     footballers: defaultFootballers,
     gameResult: null,
     selectedCategory: null,
+    gamePhase: 'playing',
   });
 
   const startGame = useCallback((playerCount: number) => {
@@ -75,6 +77,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       impostorIndex: impostorIdx,
       selectedFootballer: randomFootballer,
       gameResult: null,
+      gamePhase: 'playing',
     }));
   }, [gameState.footballers]);
 
@@ -92,11 +95,10 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return footballer;
   }, [gameState.impostorIndex, gameState.selectedFootballer, gameState.footballers]);
 
-  const endGame = useCallback((result: 'impostor-caught' | 'impostor-won') => {
+  const finishGame = useCallback(() => {
     setGameState((prev) => ({
       ...prev,
-      gameEnded: true,
-      gameResult: result,
+      gamePhase: 'finished',
     }));
   }, []);
 
@@ -112,6 +114,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       selectedFootballer: null,
       gameResult: null,
       selectedCategory: null,
+      gamePhase: 'playing',
     }));
   }, []);
 
@@ -140,7 +143,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     gameState,
     startGame,
     revealCard,
-    endGame,
+    finishGame,
     resetGame,
     setFootballers,
     nextPlayer,

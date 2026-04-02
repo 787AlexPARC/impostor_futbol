@@ -3,7 +3,7 @@ import { useGame } from '@/contexts/GameContext';
 import { Button } from '@/components/ui/button';
 import GameSetup from '@/components/GameSetup';
 import GameBoard from '@/components/GameBoard';
-import GameResult from '@/components/GameResult';
+import GameFinish from '@/components/GameFinish';
 
 /**
  * Design Philosophy: Dinámico y Energético
@@ -51,10 +51,10 @@ export default function Home() {
         <main className="container py-8">
           {!gameState.gameStarted ? (
             <GameSetup showAdmin={showAdmin} />
-          ) : !gameState.gameEnded ? (
+          ) : gameState.gamePhase === 'playing' ? (
             <GameBoard />
           ) : (
-            <GameResult onPlayAgain={resetGame} />
+            <GameFinish />
           )}
         </main>
       </div>

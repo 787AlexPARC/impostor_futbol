@@ -8,9 +8,10 @@ import PlayerCard from './PlayerCard';
  * - Tablero de juego con tarjetas interactivas
  * - Animaciones de revelación con efecto 3D
  * - Indicador de jugador actual con efecto de spotlight
+ * - Botón Finalizar Juego para control manual
  */
 export default function GameBoard() {
-  const { gameState, revealCard, endGame, nextPlayer } = useGame();
+  const { gameState, revealCard, finishGame, nextPlayer } = useGame();
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [revealedCard, setRevealedCard] = useState<number | null>(null);
 
@@ -31,18 +32,9 @@ export default function GameBoard() {
     nextPlayer();
   };
 
-  const handleCatchImpostor = () => {
-    endGame('impostor-caught');
+  const handleFinishGame = () => {
+    finishGame();
   };
-
-  const handleImpostorWins = () => {
-    endGame('impostor-won');
-  };
-
-  const currentPlayerRevealed = gameState.revealedPlayers.includes(gameState.currentPlayerIndex);
-  const revealedFootballer = currentPlayerRevealed
-    ? gameState.selectedFootballer?.name || 'Futbolista'
-    : null;
 
   return (
     <div className="max-w-4xl mx-auto animate-in fade-in duration-500">
@@ -114,25 +106,21 @@ export default function GameBoard() {
             >
               Siguiente Jugador
             </Button>
-
-            {gameState.revealedPlayers.length === gameState.players && (
-              <>
-                <Button
-                  onClick={handleCatchImpostor}
-                  className="flex-1 py-6 text-lg font-bold bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-500/50"
-                >
-                  ¡Atrapamos al Impostor!
-                </Button>
-                <Button
-                  onClick={handleImpostorWins}
-                  className="flex-1 py-6 text-lg font-bold bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/50"
-                >
-                  ¡El Impostor Ganó!
-                </Button>
-              </>
-            )}
           </>
         )}
+      </div>
+
+      {/* Botón Finalizar Juego - Siempre visible */}
+      <div className="mt-8 text-center animate-in fade-in slide-in-from-bottom-4 duration-500 delay-100">
+        <Button
+          onClick={handleFinishGame}
+          className="py-6 px-8 text-lg font-bold bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-red-500/50 hover:scale-105"
+        >
+          Finalizar Juego
+        </Button>
+        <p className="text-sm text-gray-400 mt-3">
+          Presiona cuando todos hayan visto sus cartas y hayan discutido
+        </p>
       </div>
     </div>
   );
