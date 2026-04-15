@@ -23,7 +23,7 @@ export default function GameSetup({ showAdmin }: GameSetupProps) {
   const [setupStep, setSetupStep] = useState<SetupStep>('category');
   const [selectedPlayers, setSelectedPlayers] = useState<number | null>(null);
 
-  const playerOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const playerOptions = [2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const handleCategorySelected = (categoryId: string) => {
     const footballers = getFootballersByCategory(categoryId);
