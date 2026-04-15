@@ -4,6 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router, protectedProcedure } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
+import { stripeRouter } from "./stripe-routers";
 
 export const appRouter = router({
   system: systemRouter,
@@ -17,6 +18,9 @@ export const appRouter = router({
       } as const;
     }),
   }),
+
+  // ===== ROUTERS PARA STRIPE =====
+  stripe: stripeRouter,
 
   // ===== ROUTERS PARA EL MINIJUEGO IMPOSTOR FUTBOL =====
   game: router({

@@ -8,6 +8,13 @@
       "when": 1776256335306,
       "tag": "0000_mysterious_bucky",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1776256706622,
+      "tag": "0001_shocking_mandroid",
+      "breakpoints": true
     }
   ]
 }
